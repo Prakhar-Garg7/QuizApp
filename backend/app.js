@@ -10,8 +10,10 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 // route imports (all routes will be added here)
 const quizRoutes = require("./routes/quizRoutes");
+const userRoutes = require("./routes/userRoute");
 
 app.use("/api/v1", quizRoutes);
+app.use("/api/v1", userRoutes);
 
 //Middleware for error
 app.use(errorMiddleware);

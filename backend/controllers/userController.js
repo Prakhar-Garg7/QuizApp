@@ -20,27 +20,27 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 
 // Login user
 exports.loginUser = catchAsyncError(async (req, res, next) => {
-	const { name, password } = req.body;
+	const { email, password } = req.body;
 
-	if (!name || !password) {
+	if (!email || !password) {
 		return next(
 			new ErrorHandler(
-				"Please provide name and password",
+				"Please provide email and password",
 				400
 			)
 		);
 	}
 
-	const user = await User.findOne({ name }).select("+password");
+	const user = await User.findOne({ email }).select("+password");
 
 	if (!user) {
-		return next(new ErrorHandler("Invalid name or password", 401));
+		return next(new ErrorHandler("Invalid email or password", 401));
 	}
 
 	const isPasswordMatched = await user.comparePassword(password);
 
 	if (!isPasswordMatched) {
-		return next(new ErrorHandler("Invalid name or password", 401));
+		return next(new ErrorHandler("Invalid email or password", 401));
 	}
 
 	sendToken(user, res, 200);
@@ -83,7 +83,6 @@ exports.forgotPassword = catchAsyncError(async (req, res, next) => {
 			subject: `Quiz App Password Recovery`,
 			message,
 		});
-
 		res.status(200).json({
 			success: true,
 			message: `Email sent to ${user.email} successfully`,
