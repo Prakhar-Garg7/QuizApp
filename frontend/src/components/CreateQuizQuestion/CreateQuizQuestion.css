@@ -1,0 +1,13 @@
+*{
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+}
+
+#CreateQuizQuestionBody{
+          min-height: 50px;
+          border: 2px solid #424874;
+          margin-bottom: 5px;
+          padding: 4px;
+          background-color: #E4B1F0;
+}
